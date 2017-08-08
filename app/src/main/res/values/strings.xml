@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">EmployeeDirectory</string>
+
+    <string name="action_delete_all_entries">Delete All Employees</string>
+
+    <string name="empty_view_title_text">It\'s a bit lonely here...</string>
+
+    <string name="empty_view_subtitle_text">Get started by adding an Employee</string>
+
+    <string name="editor_activity_title_new_employee">Add an Employee</string>
+
+    <string name="editor_activity_title_edit_employee">Edit Employee</string>
+
+    <string name="action_save">Save</string>
+
+    <string name="action_delete">Delete</string>
+
+    <string name="editor_insert_employee_successful">Employee saved</string>
+
+    <string name="editor_insert_employee_failed">Error with saving employee</string>
+
+    <string name="editor_update_employee_successful">Employee updated</string>
+
+    <string name="editor_update_employee_failed">Error with updating employee</string>
+
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <string name="discard">Discard</string>
+
+    <string name="keep_editing">Keep Editing</string>
+
+    <string name="editor_delete_employee_successful">Employee deleted</string>
+
+    <string name="editor_delete_employee_failed">Error with deleting employee</string>
+
+    <string name="delete_dialog_msg">Delete this Employee?</string>
+
+    <string name="delete">Delete</string>
+
+    <string name="cancel">Cancel</string>
+
+    <string name="employee_name">Employee Name</string>
+
+    <string name="category_gender">Gender</string>
+
+    <string name="category_title">Employee Title</string>
+
+    <string name="category_department">Employee Department</string>
+
+    <string name="category_city">Employee City</string>
+
+    <string name="category_phone">Employee Phone</string>
+
+    <string name="category_email">Employee Email</string>
+
+    <string name="hint_employee_firstname">First Name</string>
+
+    <string name="hint_employee_title">Title</string>
+
+    <string name="hint_employee_department">Department</string>
+
+    <string name="hint_employee_city">City</string>
+
+    <string name="hint_employee_phone">Phone Number</string>
+
+    <string name="hint_employee_email">Email</string>
+
+    <string name="hint_employee_lastname">Last Name</string>
+
+    <string name="gender_unknown">Unknown</string>
+
+    <string name="gender_male">Male</string>
+
+    <string name="gender_female">Female</string>
+
+    <string name="unknown">Unknown</string>
+</resources>

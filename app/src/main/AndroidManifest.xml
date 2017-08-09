@@ -16,6 +16,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".EmployeeEditor"
+            android:theme="@style/EditorTheme"
+            android:parentActivityName=".EmployeeActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".EmployeeActivity" />
+        </activity>
+        <provider
+            android:name=".data.EmployeeProvider"
+            android:authorities="com.example.delaroy.employeedirectory"
+            android:exported="false" />
     </application>
+
+
 
 </manifest>

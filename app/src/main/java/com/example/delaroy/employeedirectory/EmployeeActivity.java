@@ -16,12 +16,15 @@
 package com.example.delaroy.employeedirectory;
 
 
+import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 
 import com.example.delaroy.employeedirectory.data.EmployeeDbHelper;
@@ -48,12 +51,22 @@ public class EmployeeActivity extends AppCompatActivity {
         findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(EmployeeActivity.this, EmployeeEditor.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                intent.putExtra(EmployeeEditor.EXTRA_RECT, createRect(button));
+                startActivity(intent);
             }
         });
 
         employeeDbHelper = new EmployeeDbHelper(this);
 
+    }
+
+    private Rect createRect(View view) {
+        Rect rect = new Rect();
+        view.getDrawingRect(rect);
+        ((ViewGroup) view.getParent()).offsetDescendantRectToMyCoords(view, rect);
+        return rect;
     }
 
 

@@ -16,7 +16,11 @@
 package com.example.delaroy.employeedirectory;
 
 
+import android.app.LoaderManager;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,8 +29,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 
+import com.example.delaroy.employeedirectory.data.EmployeeContract;
 import com.example.delaroy.employeedirectory.data.EmployeeDbHelper;
 
 import butterknife.BindView;
@@ -35,8 +41,15 @@ import butterknife.ButterKnife;
 /**
  * Displays list of employees that were entered and stored in the app.
  */
-public class EmployeeActivity extends AppCompatActivity {
+public class EmployeeActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<Cursor> {
     EmployeeDbHelper employeeDbHelper;
+
+    /** Identifier for the employee data loader */
+    private static final int EMPLOYEE_LOADER = 0;
+
+    /** Adapter for the ListView */
+    EmployeeCursorAdapter mCursorAdapter;
 
 
     @BindView(R.id.fab) FloatingActionButton button;
@@ -58,7 +71,23 @@ public class EmployeeActivity extends AppCompatActivity {
             }
         });
 
+        // Find the ListView which will be populated with the employee data
+        ListView employeeListView = (ListView) findViewById(R.id.list);
+
+        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
+        View emptyView = findViewById(R.id.empty_view);
+        employeeListView.setEmptyView(emptyView);
+
+        // Setup an Adapter to create a list item for each row of pet data in the Cursor.
+        // There is no pet data yet (until the loader finishes) so pass in null for the Cursor.
+        mCursorAdapter = new EmployeeCursorAdapter(this, null);
+        employeeListView.setAdapter(mCursorAdapter);
+
+
         employeeDbHelper = new EmployeeDbHelper(this);
+
+        // Kick off the loader
+        getLoaderManager().initLoader(EMPLOYEE_LOADER, null, this);
 
     }
 
@@ -91,4 +120,41 @@ public class EmployeeActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        // Define a projection that specifies the columns from the table we care about.
+        String[] projection = {
+                EmployeeContract.EmployeeEntry._ID,
+                EmployeeContract.EmployeeEntry.COLUMN_FIRSTNAME,
+                EmployeeContract.EmployeeEntry.COLUMN_LASTNAME,
+                EmployeeContract.EmployeeEntry.COLUMN_TITLE,
+                EmployeeContract.EmployeeEntry.COLUMN_DEPARTMENT,
+                EmployeeContract.EmployeeEntry.COLUMN_CITY,
+                EmployeeContract.EmployeeEntry.COLUMN_PHONE,
+                EmployeeContract.EmployeeEntry.COLUMN_EMAIL
+        };
+
+        // This loader will execute the ContentProvider's query method on a background thread
+        return new CursorLoader(this,   // Parent activity context
+                EmployeeContract.EmployeeEntry.CONTENT_URI,   // Provider content URI to query
+                projection,             // Columns to include in the resulting Cursor
+                null,                   // No selection clause
+                null,                   // No selection arguments
+                null);                  // Default sort order
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        // Update {@link EmployeeCursorAdapter} with this new cursor containing updated pet data
+        mCursorAdapter.swapCursor(cursor);
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+        // Callback called when the data needs to be deleted
+        mCursorAdapter.swapCursor(null);
+
+    }
 }

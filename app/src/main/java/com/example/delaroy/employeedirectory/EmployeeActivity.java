@@ -17,11 +17,13 @@ package com.example.delaroy.employeedirectory;
 
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 
@@ -43,7 +46,8 @@ import butterknife.ButterKnife;
  */
 public class EmployeeActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
-    EmployeeDbHelper employeeDbHelper;
+
+    //TODO
 
     /** Identifier for the employee data loader */
     private static final int EMPLOYEE_LOADER = 0;
@@ -78,13 +82,36 @@ public class EmployeeActivity extends AppCompatActivity implements
         View emptyView = findViewById(R.id.empty_view);
         employeeListView.setEmptyView(emptyView);
 
-        // Setup an Adapter to create a list item for each row of pet data in the Cursor.
-        // There is no pet data yet (until the loader finishes) so pass in null for the Cursor.
+        // Setup an Adapter to create a list item for each row of employee data in the Cursor.
+        // There is no employee data yet (until the loader finishes) so pass in null for the Cursor.
         mCursorAdapter = new EmployeeCursorAdapter(this, null);
         employeeListView.setAdapter(mCursorAdapter);
 
+        //TODO
+        employeeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id){
+                // Create new intent to go to {@link EmployeeEditor}
+                Intent intent = new Intent(EmployeeActivity.this, EmployeeEditor.class);
 
-        employeeDbHelper = new EmployeeDbHelper(this);
+                // Form the content URI that represents the specific employee that was clicked on,
+                // by appending the "id" (passed as input to this method) onto the
+                // {@link EmployeeEntry#CONTENT_URI}.
+                // For example, the URI would be "content://com.example.delaroy.employeedirectory/employees/2"
+                // if the employee with ID 2 was clicked on.
+                Uri currentEmployeeUri = ContentUris.withAppendedId(EmployeeContract.EmployeeEntry.CONTENT_URI, id);
+
+                // Set the URI on the data field of the intent
+                intent.setData(currentEmployeeUri);
+                intent.putExtra(EmployeeEditor.EXTRA_RECT, createRect(button));
+
+                // Launch the {@link EmployeeEditor} to display the data for the current employee.
+                startActivity(intent);
+
+                return true;
+
+            }
+        });
 
         // Kick off the loader
         getLoaderManager().initLoader(EMPLOYEE_LOADER, null, this);
@@ -145,7 +172,7 @@ public class EmployeeActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        // Update {@link EmployeeCursorAdapter} with this new cursor containing updated pet data
+        // Update {@link EmployeeCursorAdapter} with this new cursor containing updated employee data
         mCursorAdapter.swapCursor(cursor);
 
     }

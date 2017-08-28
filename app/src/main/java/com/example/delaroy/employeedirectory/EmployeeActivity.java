@@ -16,18 +16,24 @@
 package com.example.delaroy.employeedirectory;
 
 
+import android.annotation.TargetApi;
 import android.app.LoaderManager;
+import android.app.SearchManager;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +53,6 @@ import butterknife.ButterKnife;
 public class EmployeeActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    //TODO
 
     /** Identifier for the employee data loader */
     private static final int EMPLOYEE_LOADER = 0;
@@ -57,6 +62,10 @@ public class EmployeeActivity extends AppCompatActivity implements
 
 
     @BindView(R.id.fab) FloatingActionButton button;
+
+    public EmployeeActivity(){
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +96,31 @@ public class EmployeeActivity extends AppCompatActivity implements
         mCursorAdapter = new EmployeeCursorAdapter(this, null);
         employeeListView.setAdapter(mCursorAdapter);
 
-        //TODO
+       //TODO
+        // Setup the item click listener
+        employeeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+                Intent intent = new Intent(EmployeeActivity.this, EmployeeDetails.class);
+
+                // Form the content URI that represents the specific employee that was clicked on,
+                // by appending the "id" (passed as input to this method) onto the
+                // {@link EmployeeEntry#CONTENT_URI}.
+                // For example, the URI would be "content://com.example.delaroy.employeedirectory/employees/2"
+                // if the employee with ID 2 was clicked on.
+                Uri currentEmployeeUri = ContentUris.withAppendedId(EmployeeContract.EmployeeEntry.CONTENT_URI, id);
+
+                // Set the URI on the data field of the intent
+                intent.setData(currentEmployeeUri);
+                intent.putExtra(EmployeeEditor.EXTRA_RECT, createRect(button));
+
+                startActivity(intent);
+
+            }
+        });
+
+
         employeeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id){
@@ -126,24 +159,24 @@ public class EmployeeActivity extends AppCompatActivity implements
     }
 
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu options from the res/menu/menu_catalog.xml file.
-        // This adds menu items to the app bar.
+
+        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_catalog, menu);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // User clicked on a menu option in the app bar overflow menu
         switch (item.getItemId()) {
-            // Respond to a click on the "Delete all entries" menu option
-
+            case R.id.menu_search:
+                onSearchRequested();
+                return true;
+            default:
+                return false;
         }
-        return super.onOptionsItemSelected(item);
     }
 
 

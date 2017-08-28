@@ -74,4 +74,7 @@
     <string name="gender_female">Female</string>
 
     <string name="unknown">Unknown</string>
+
+    <string name="menu_search">Search</string>
+    <string name="search_hint">"Search employees" </string>
 </resources>

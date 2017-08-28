@@ -31,6 +31,8 @@ dependencies {
     compile 'com.android.support:design:26.0.0'
     compile 'com.hendraanggrian:reveallayout:0.5.3'
 
+    compile 'com.android.support:support-v4:26.0.0'
+
     compile "com.jakewharton:butterknife:8.7.0"
     kapt "com.jakewharton:butterknife-compiler:8.7.0"
 

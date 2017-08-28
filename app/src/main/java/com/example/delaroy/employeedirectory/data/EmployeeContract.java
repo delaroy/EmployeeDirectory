@@ -67,7 +67,7 @@ public final class EmployeeContract {
         /** Name of database table for employees */
         public final static String TABLE_NAME = "employees";
 
-        /**
+      /**
          * Unique ID number for the employee (only for use in the database table).
          *
          * Type: INTEGER

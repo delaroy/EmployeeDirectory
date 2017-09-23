@@ -30,7 +30,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.0.0'
     compile 'com.android.support:design:26.0.0'
     compile 'com.hendraanggrian:reveallayout:0.5.3'
-
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
     compile 'com.android.support:support-v4:26.0.0'
 
     compile "com.jakewharton:butterknife:8.7.0"

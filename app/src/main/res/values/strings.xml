@@ -77,4 +77,7 @@
 
     <string name="menu_search">Search</string>
     <string name="search_hint">"Search employees" </string>
+
+    <string name="uploadImages">Set your image</string>
+    <string name="action_pic">Pictures</string>
 </resources>

@@ -85,6 +85,7 @@ public final class EmployeeContract {
         public final static String COLUMN_DEPARTMENT = "department";
         public final static String COLUMN_CITY = "city";
         public final static String COLUMN_PHONE = "phone";
+        public final static String COLUMN_IMAGE = "image";
         public final static String COLUMN_EMAIL = "email";
 
         /**

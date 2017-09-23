@@ -58,6 +58,7 @@ public class EmployeeDbHelper extends SQLiteOpenHelper {
                 + EmployeeContract.EmployeeEntry.COLUMN_DEPARTMENT + " TEXT NOT NULL, "
                 + EmployeeContract.EmployeeEntry.COLUMN_CITY + " TEXT NOT NULL, "
                 + EmployeeContract.EmployeeEntry.COLUMN_PHONE + " TEXT NOT NULL, "
+                + EmployeeContract.EmployeeEntry.COLUMN_IMAGE + " BLOB NOT NULL, "
                 + EmployeeContract.EmployeeEntry.COLUMN_EMAIL + " TEXT NOT NULL, "
                 + EmployeeContract.EmployeeEntry.COLUMN_EMPLOYEE_GENDER + " INTEGER NOT NULL " + " );";
 
